@@ -29,31 +29,23 @@ def parse_guess(raw: str):
 
     return True, value, None
 
-def check_guess(guess, secret):
+# FIX: The logic in check_guess was wrong by two parts:
+# 1. The secret parameter was either a string or int which created the extra
+# try/catch. Removed the type-toggling logic in app.py so that the secret is always an int
+# 2. The Messages were swapped. When the guess is too high, tell the user to go lower
+# IF guess is too low, tell the user to go higher.
+def check_guess(guess: int, secret: int):
     """
     Compare guess to secret and return (outcome, message).
 
     outcome examples: "Win", "Too High", "Too Low"
     """
     if guess == secret:
-        return "Win", "🎉 Correct!"
-
-    try:
-        # FIXME: Logic breaks here
-        if guess > secret:
-            return "Too High", "📈 Go HIGHER!"
-        else:
-        # FIXME: Logic breaks here
-            return "Too Low", "📉 Go LOWER!"
-    except TypeError:
-        g = str(guess)
-        if g == secret:
             return "Win", "🎉 Correct!"
-        # FIXME: Logic breaks here
-        if g > secret:
-            return "Too High", "📈 Go HIGHER!"
-        # FIXME: Logic breaks here
-        return "Too Low", "📉 Go LOWER!"
+    elif guess > secret:
+        return "Too High", "📉 Go LOWER!"
+    else:
+        return "Too Low", "📈 Go HIGHER!"
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
     """Update score based on outcome and attempt number."""

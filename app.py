@@ -1,6 +1,8 @@
 import random
 import streamlit as st
 
+from logic_utils import get_range_for_difficulty, check_guess, parse_guess, update_score
+
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
 
 st.title("🎮 Game Glitch Investigator")
@@ -43,7 +45,7 @@ if "history" not in st.session_state:
 
 st.subheader("Make a guess")
 
-# FIX: by using the correct variables to update the UI when changing the difficulty level. 
+# FIX: by using the correct variables to update the UI when changing the difficulty level.
 # Use LLM to write a test called test_range_caption_updates_when_difficulty_changes to test
 # that when the user updates the difficulty range, the UI is updated.
 st.info(
@@ -96,12 +98,9 @@ if submit:
         st.error(err)
     else:
         st.session_state.history.append(guess_int)
-
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
-
+        # FIX: Removed the type-toggling logic as it is not needed and created
+        # type inconsistency in the check_guess function
+        secret = st.session_state.secret
         outcome, message = check_guess(guess_int, secret)
 
         if show_hint:

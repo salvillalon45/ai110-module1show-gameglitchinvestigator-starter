@@ -5,6 +5,9 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 1. What was broken when you started?
 
 - What did the game look like the first time you ran it?
+  - The game was inconsistent. It gave me wrong messages for the guesses I gave. 
+  - Also the `New Game` button was not working as expected.
+  - More on the bugs I found below.
 - List at least two concrete bugs you noticed at the start  
   (for example: "the hints were backwards").
 
