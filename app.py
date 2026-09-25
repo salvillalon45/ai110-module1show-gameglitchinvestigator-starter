@@ -4,10 +4,9 @@ import streamlit as st
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
-    if difficulty == "Normal":
-        return 1, 100
     if difficulty == "Hard":
         return 1, 50
+    # Normal difficulty level is the default level.
     return 1, 100
 
 
@@ -106,8 +105,11 @@ if "history" not in st.session_state:
 
 st.subheader("Make a guess")
 
+# FIX: by using the correct variables to update the UI when changing the difficulty level. 
+# Use LLM to write a test called test_range_caption_updates_when_difficulty_changes to test
+# that when the user updates the difficulty range, the UI is updated.
 st.info(
-    f"Guess a number between 1 and 100. "
+    f"Guess a number between {low} and {high}. "
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 

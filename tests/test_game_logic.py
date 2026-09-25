@@ -1,4 +1,25 @@
+import os
+
 from logic_utils import check_guess
+from streamlit.testing.v1 import AppTest
+
+APP_PATH = os.path.join(os.path.dirname(__file__), "..", "app.py")
+
+def test_range_caption_updates_when_difficulty_changes():
+    at = AppTest.from_file(APP_PATH)
+    at.run()
+
+    # Default difficulty is "Normal"
+    assert at.sidebar.caption[0].value == "Range: 1 to 100"
+
+    at.sidebar.selectbox[0].select("Easy").run()
+    assert at.sidebar.caption[0].value == "Range: 1 to 20"
+
+    at.sidebar.selectbox[0].select("Hard").run()
+    assert at.sidebar.caption[0].value == "Range: 1 to 50"
+
+    at.sidebar.selectbox[0].select("Normal").run()
+    assert at.sidebar.caption[0].value == "Range: 1 to 100"
 
 def test_winning_guess():
     # If the secret is 50 and guess is 50, it should be a win
