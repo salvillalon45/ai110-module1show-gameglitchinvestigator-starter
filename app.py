@@ -28,8 +28,13 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
-if "secret" not in st.session_state:
-    st.session_state.secret = random.randint(low, high)
+# FIX: Use the LLM to only update the secret when the difficulty changes 
+# (or on first load of the application)
+# Not on every rerun caused by submitting a guess.
+# Use the LLM to create a test called test_secret_updates_within_new_range_when_difficulty_changes to test this behavior
+if st.session_state.get("difficulty") != difficulty or "secret" not in st.session_state:
+    st.session_state.secret = random.randint(low, high) 
+    st.session_state.difficulty = difficulty
 
 if "attempts" not in st.session_state:
     st.session_state.attempts = 1

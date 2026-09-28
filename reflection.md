@@ -8,8 +8,9 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   - The game was inconsistent. It gave me wrong messages for the guesses I gave.
   - Also the `New Game` button was not working as expected.
   - More on the bugs I found below.
-- List at least two concrete bugs you noticed at the start  
-  (for example: "the hints were backwards").
+- List at least two concrete bugs you noticed at the start (for example: "the hints were backwards").
+  - Changing the difficulty was not reflected in the UI
+  - The hints were backwards
 
 **Bug Reproduction Log**
 
@@ -17,9 +18,8 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| Cannot press the key enter on my keyboard to submit | To submit my guess by pressing enter | Does not submit my guess and I have to click with my mouse | |
 | When you change the difficulty in the sidenav, it does not update the low and high values in the blue box | The values to change since I updated the difficulty level | Does not change the values in the difficulty level| |
-| Clicking the button `New Game` after winning or lossing does not restart a game | After winning a game, click on `New Game` button to start a new game | It does not start a new game. Forcing users to refresh the app | |
+| Clicking the button `New Game` after winning or lossing does not restart a game | After winning a game, clicking on the `New Game` button updates the UI to show the user that a new has started | It gives no indication that a new game started. It forces users to refresh the app | |
 | Secret is 29, Guess number is 12 | The app tells me to guess lower | the app tells me to go higher | |
 | Secret is 29, Guess number is 5 | The app tells me to guess lower | the app tells me to go higher | |
 | Secret is 29, Guess number is 0 | The app should not handle `0` since it is invalid input | the app tells me to go lower | |
@@ -119,7 +119,7 @@ The suggestion was good, it did pointed to the wrong line numbers. It must have 
 
 - Did AI help you design or understand any tests? How?
 
-  - LLMs did help in designing a test. They help me understand how to write a test to check for UI state change. You can see the LLM generate code in this unit test `test_range_caption_updates_when_difficulty_changes`
+  - LLMs did help in designing a test. They help me understand how to write a test to check for UI state change. You can see the LLM generate code in this unit test `test_range_caption_updates_when_difficulty_changes` and `test_secret_updates_within_new_range_when_difficulty_changes`
 
 ---
 
@@ -129,7 +129,7 @@ The suggestion was good, it did pointed to the wrong line numbers. It must have 
 
 To my understanding, Streamlit is a python library that allows us to create UI using pure Python. The functionality of `rerun` is that it will rerun the script immediately. So when you call `st.rerun()`, it will not execute any other code after it and rerun the script
 
-To me session state refers to the state of the UI, so for example, when the user inputted a guess the UI updates the state of the application by showing the user a message on whether they got the correct guess, incorrect guess and to try again, or if they lost.
+Session state refers to the state of the UI. For example, when the user inputted a guess the UI updates the state of the application by showing the user a message on whether they got the correct guess, incorrect guess, or if they lost.
 
 ---
 
@@ -137,5 +137,10 @@ To me session state refers to the state of the UI, so for example, when the user
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+  - A new habit will be to first gather my thoughts and brainstorm what I am trying to accomplish. I then want to write down the prompt first before submitting to Claude Code.
+  - This way I will create a better prompt rather than just blindly typing and wasting tokens. I first want to gather thoughts and then write my prompts. This is a similar experience when asking for help. You first need to try it out and understand what is going so that when you pair with another engineer, you can explain the problem to them.
 - What is one thing you would do differently next time you work with AI on a coding task?
+  - Next time, I want to work on my prompting. I want to write better prompts to give me a better response. I want to include context,
+  expected/actual output and what I want to accomplish.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+  - AI generated code is helpful, but you need to verify it. I used the LLM as a thought partner to help me write UI unit tests in pytest. This was nice since I am not familiar with the pytest framework so it would have taken me longer to write a test. After every generated unit test, I made sure to verify since the test could be wrong.

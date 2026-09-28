@@ -21,6 +21,22 @@ def test_range_caption_updates_when_difficulty_changes():
     at.sidebar.selectbox[0].select("Normal").run()
     assert at.sidebar.caption[0].value == "Range: 1 to 100"
 
+def test_secret_updates_within_new_range_when_difficulty_changes():
+    at = AppTest.from_file(APP_PATH)
+    at.run()
+
+    # Default difficulty is "Normal" (range 1 to 100)
+    assert 1 <= at.session_state["secret"] <= 100
+
+    at.sidebar.selectbox[0].select("Easy").run()
+    # Easy range is 1 to 20, so the secret should be updated to fall within it
+    secret = at.session_state["secret"]
+    assert 1 <= secret <= 20
+
+    # Developer Debug Info dropdown should reflect the same updated secret
+    debug_values = [item.value for item in at.expander[0].markdown]
+    assert f"Secret: `{secret}`" in debug_values
+
 def test_winning_guess():
     # If the secret is 50 and guess is 50, it should be a win
     result = check_guess(50, 50)
