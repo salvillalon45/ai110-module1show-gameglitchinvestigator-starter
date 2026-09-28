@@ -91,6 +91,7 @@ tests/test_game_logic.py .....                                                  
 
 - I do not think this is listed as an enhanced feature, but I do want to call out that the UI of the initial application did not reflect the new low and high values when changing the difficulty range. I fixed this bug and added the unit tests for it. **Can this effort be considered as a Stretch Feature?**
 
-<video width="1500" controls>
-  <source src="./difficulty_range.mov" type="video/mp4">
-</video>
+
+
+https://github.com/user-attachments/assets/edcbaee7-a5c7-48fb-8699-6475bca094e8
+
